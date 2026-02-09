@@ -1,17 +1,41 @@
+import { useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { HeroSection, FeaturesSection, CTASection } from "@/components/landing/LandingSections";
+import ScrollProgress from "@/components/ScrollProgress";
+import { HeroSection, FeaturesSection, TrustedBySection, CTASection } from "@/components/landing/LandingSections";
 
-const Index = () => (
-  <div className="min-h-screen bg-background">
-    <Navbar />
-    <main>
-      <HeroSection />
-      <FeaturesSection />
-      <CTASection />
-    </main>
-    <Footer />
-  </div>
-);
+gsap.registerPlugin(ScrollTrigger);
+
+const Index = () => {
+  useEffect(() => {
+    // Smooth scroll behavior
+    gsap.to(window, { scrollBehavior: "smooth" });
+
+    // Refresh ScrollTrigger on resize
+    const handleResize = () => ScrollTrigger.refresh();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-background overflow-x-hidden">
+      <ScrollProgress />
+      <Navbar />
+      <main>
+        <HeroSection />
+        <TrustedBySection />
+        <FeaturesSection />
+        <CTASection />
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 export default Index;
