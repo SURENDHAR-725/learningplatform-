@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Star, Users, Clock, BookOpen, Play, CheckCircle2, ArrowLeft, Award, Target } from "lucide-react";
+import { Star, Users, Clock, BookOpen, Play, CheckCircle2, ArrowLeft, Award, Target, Loader2, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Navbar from "@/components/Navbar";
@@ -11,6 +11,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import MagneticButton from "@/components/MagneticButton";
 import AnimatedText from "@/components/AnimatedText";
 import { mockCourses } from "@/data/courses";
+import { useToast } from "@/hooks/use-toast";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,12 +34,39 @@ const learningPoints = [
 
 const CourseDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const course = mockCourses.find((c) => c.id === id);
+  const { toast } = useToast();
+  const [enrolling, setEnrolling] = useState(false);
+  const [wishlisting, setWishlisting] = useState(false);
   
   const pageRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
+
+  const handleEnroll = async () => {
+    setEnrolling(true);
+    setTimeout(() => {
+      toast({
+        title: "You're In! 🎉",
+        description: "Welcome to the course! Let's get this bread!",
+      });
+      setEnrolling(false);
+      navigate("/dashboard");
+    }, 1500);
+  };
+
+  const handleWishlist = async () => {
+    setWishlisting(true);
+    setTimeout(() => {
+      toast({
+        title: "Saved! ❤️",
+        description: "Added to your wishlist for later!",
+      });
+      setWishlisting(false);
+    }, 800);
+  };
 
   useEffect(() => {
     if (!pageRef.current || !course) return;
@@ -157,7 +185,7 @@ const CourseDetail = () => {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <h1 className="font-display text-2xl font-bold text-foreground mb-4">Course Not Found</h1>
-          <Link to="/courses"><Button>Browse Courses</Button></Link>
+          <Link to="/courses"><Button>Window Shopping 🛍️</Button></Link>
         </div>
       </div>
     );
@@ -274,9 +302,41 @@ const CourseDetail = () => {
                   <Award className="w-4 h-4" /> Lifetime access · Certificate included
                 </p>
                 <MagneticButton className="w-full mb-3">
-                  <Button className="w-full" size="lg">Enroll Now</Button>
+                  <Button 
+                    className="w-full" 
+                    size="lg" 
+                    onClick={handleEnroll}
+                    disabled={enrolling}
+                  >
+                    {enrolling ? (
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Processing... 💳
+                      </>
+                    ) : (
+                      "Take My Money! 💰"
+                    )}
+                  </Button>
                 </MagneticButton>
-                <Button variant="outline" className="w-full" size="lg">Add to Wishlist</Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  size="lg"
+                  onClick={handleWishlist}
+                  disabled={wishlisting}
+                >
+                  {wishlisting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Heart className="w-5 h-5 mr-2" />
+                      Save for Later ❤️
+                    </>
+                  )}
+                </Button>
                 
                 <div className="mt-6 space-y-3 text-sm text-muted-foreground">
                   <div className="flex justify-between">

@@ -191,7 +191,7 @@ const Dashboard = () => {
                 <h2 className="font-display text-xl font-bold text-foreground">Continue Learning</h2>
                 <Link to="/courses">
                   <Button variant="ghost" size="sm" className="group">
-                    View All <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    See All the Goods 👀 <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
               </div>
@@ -214,7 +214,7 @@ const Dashboard = () => {
                         <span className="text-xs font-medium text-foreground whitespace-nowrap">{course.progress}%</span>
                       </div>
                     </div>
-                    <Button size="sm" className="shrink-0">Continue</Button>
+                    <Button size="sm" className="shrink-0">Back to the Grind 💪</Button>
                   </div>
                 ))}
               </div>

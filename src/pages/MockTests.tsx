@@ -1,14 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Clock, Target, CheckCircle2, Zap, Trophy, BarChart3 } from "lucide-react";
+import { Clock, Target, CheckCircle2, Zap, Trophy, BarChart3, Brain, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import AnimatedText from "@/components/AnimatedText";
+import AIQuizGenerator from "@/components/AIQuizGenerator";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -188,29 +190,47 @@ const MockTests = () => {
             </div>
           </div>
 
-          {/* Filters */}
-          <div ref={filtersRef} className="flex gap-2 flex-wrap mb-8">
-            {testCategories.map((cat) => (
-              <Button
-                key={cat}
-                variant={activeCategory === cat ? "default" : "secondary"}
-                size="sm"
-                onClick={() => setActiveCategory(cat)}
-                className="filter-btn"
-              >
-                {cat}
-              </Button>
-            ))}
-          </div>
+          {/* Main Tabs */}
+          <Tabs defaultValue="ai-quiz" className="mb-8">
+            <TabsList className="grid w-full max-w-md grid-cols-2 mb-8">
+              <TabsTrigger value="ai-quiz" className="flex items-center gap-2">
+                <Brain className="w-4 h-4" />
+                AI Quiz Generator
+              </TabsTrigger>
+              <TabsTrigger value="certification" className="flex items-center gap-2">
+                <Target className="w-4 h-4" />
+                Certification Tests
+              </TabsTrigger>
+            </TabsList>
 
-          {/* Tests Grid */}
-          <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1000px" }}>
-            {filtered.map((test) => (
-              <div
-                key={test.id}
-                className="test-card glass-card rounded-xl p-6 cursor-pointer"
-                style={{ transformStyle: "preserve-3d" }}
-              >
+            <TabsContent value="ai-quiz">
+              <AIQuizGenerator />
+            </TabsContent>
+
+            <TabsContent value="certification">
+              {/* Filters */}
+              <div ref={filtersRef} className="flex gap-2 flex-wrap mb-8">
+                {testCategories.map((cat) => (
+                  <Button
+                    key={cat}
+                    variant={activeCategory === cat ? "default" : "secondary"}
+                    size="sm"
+                    onClick={() => setActiveCategory(cat)}
+                    className="filter-btn"
+                  >
+                    {cat}
+                  </Button>
+                ))}
+              </div>
+
+              {/* Tests Grid */}
+              <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1000px" }}>
+                {filtered.map((test) => (
+                  <div
+                    key={test.id}
+                    className="test-card glass-card rounded-xl p-6 cursor-pointer"
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
                 <div className="flex items-start justify-between mb-4">
                   <Badge variant="secondary">{test.category}</Badge>
                   <span className={`text-xs font-medium px-2 py-1 rounded-full border ${difficultyColors[test.difficulty]}`}>
@@ -247,11 +267,13 @@ const MockTests = () => {
                 )}
 
                 <Button className="w-full" size="sm">
-                  {test.attempts > 0 ? "Retake Test" : "Start Test"}
+                  {test.attempts > 0 ? "Redemption Arc Time! 🔄" : "Challenge Accepted! 💪"}
                 </Button>
               </div>
             ))}
-          </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
       <Footer />

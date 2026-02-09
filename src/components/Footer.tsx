@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { BookOpen, Github, Twitter, Linkedin, Mail, ArrowRight } from "lucide-react";
+import { BookOpen, Github, Twitter, Linkedin, Mail, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,6 +24,31 @@ const socialLinks = [
 
 const Footer = () => {
   const footerRef = useRef<HTMLDivElement>(null);
+  const [email, setEmail] = useState("");
+  const [subscribing, setSubscribing] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubscribe = async () => {
+    if (!email) {
+      toast({
+        title: "Hold Up! ✋",
+        description: "Drop your email first, friend!",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setSubscribing(true);
+    // Simulate API call
+    setTimeout(() => {
+      toast({
+        title: "You're In! 🎉",
+        description: "Welcome to the cool kids newsletter!",
+      });
+      setEmail("");
+      setSubscribing(false);
+    }, 1000);
+  };
 
   useEffect(() => {
     if (!footerRef.current) return;
@@ -127,11 +153,27 @@ const Footer = () => {
             
             {/* Newsletter */}
             <div className="space-y-3">
-              <p className="text-sm font-medium text-foreground">Subscribe to our newsletter</p>
+              <p className="text-sm font-medium text-foreground">Get the Good Stuff 📬</p>
               <div className="flex gap-2">
-                <Input placeholder="Enter your email" className="max-w-[200px]" />
-                <Button size="icon" className="shrink-0">
-                  <ArrowRight className="w-4 h-4" />
+                <Input 
+                  placeholder="Drop your email here" 
+                  className="max-w-[200px]" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                />
+                <Button 
+                  size="icon" 
+                  className="shrink-0" 
+                  title="Subscribe Now!"
+                  onClick={handleSubscribe}
+                  disabled={subscribing}
+                >
+                  {subscribing ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <ArrowRight className="w-4 h-4" />
+                  )}
                 </Button>
               </div>
             </div>

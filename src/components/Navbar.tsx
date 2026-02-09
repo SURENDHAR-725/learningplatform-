@@ -150,13 +150,13 @@ const Navbar = () => {
         <div ref={actionsRef} className="hidden md:flex items-center gap-2">
           <Link to="/login">
             <MagneticButton strength={0.2}>
-              <Button variant="ghost" size="sm">Log in</Button>
+              <Button variant="ghost" size="sm">Unlock the Magic ✨</Button>
             </MagneticButton>
           </Link>
           <Link to="/signup">
             <MagneticButton strength={0.3}>
               <Button size="sm" className="relative overflow-hidden group">
-                <span className="relative z-10">Get Started</span>
+                <span className="relative z-10">Join the Cool Kids 😎</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </Button>
             </MagneticButton>
@@ -182,10 +182,10 @@ const Navbar = () => {
           ))}
           <div className="flex gap-2 pt-2 mobile-link">
             <Link to="/login" className="flex-1">
-              <Button variant="outline" className="w-full">Log in</Button>
+              <Button variant="outline" className="w-full">Unlock Magic ✨</Button>
             </Link>
             <Link to="/signup" className="flex-1">
-              <Button className="w-full">Get Started</Button>
+              <Button className="w-full">Join Club 😎</Button>
             </Link>
           </div>
         </div>

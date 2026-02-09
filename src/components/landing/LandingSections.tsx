@@ -8,6 +8,7 @@ import AnimatedText from "@/components/AnimatedText";
 import MagneticButton from "@/components/MagneticButton";
 import ParallaxSection from "@/components/ParallaxSection";
 import CountUpNumber from "@/components/CountUpNumber";
+import VideoHero from "@/components/VideoHero";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -142,18 +143,13 @@ const HeroSection = () => {
           </div>
 
           <h1 className="hero-title font-display text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6">
-            <span style={{ color: "hsl(220 20% 95%)" }}>Master Skills That </span>
-            <AnimatedText
-              text="Shape Careers"
-              className="text-gradient-primary"
-              animation="wave"
-              delay={0.5}
-            />
+            <span className="text-white">Master Skills That </span>
+            <br />
+            <span className="text-primary">Shape Careers</span>
           </h1>
 
           <p
-            className="hero-subtitle text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
-            style={{ color: "hsl(220 12% 65%)" }}
+            className="hero-subtitle text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed text-gray-300"
           >
             From certification prep to real-world projects — learn with AI guidance,
             practice with 10,000+ mock tests, and build a portfolio that gets you hired.
@@ -163,15 +159,17 @@ const HeroSection = () => {
             <MagneticButton>
               <Link to="/courses">
                 <Button variant="hero" size="lg" className="text-base px-8 h-12 group">
-                  Start Learning Free
+                  Let's Get This Bread 🍞
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
             </MagneticButton>
             <MagneticButton>
-              <Button variant="hero-outline" size="lg" className="text-base px-8 h-12 group">
-                <Play className="w-4 h-4 mr-1 group-hover:scale-110 transition-transform" /> Watch Demo
-              </Button>
+              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">
+                <Button variant="hero-outline" size="lg" className="text-base px-8 h-12 group">
+                  <Play className="w-4 h-4 mr-1 group-hover:scale-110 transition-transform" /> Sneak Peek 👀
+                </Button>
+              </a>
             </MagneticButton>
           </div>
 
@@ -187,6 +185,9 @@ const HeroSection = () => {
               </div>
             ))}
           </div>
+
+          {/* Video Animation Section */}
+          <VideoHero />
         </div>
       </div>
     </section>
@@ -472,7 +473,7 @@ const CTASection = () => {
           <MagneticButton strength={0.5}>
             <Link to="/signup">
               <Button variant="hero" size="lg" className="text-base px-10 h-12 group">
-                Get Started — It's Free
+                Join the Cool Kids Club 😎
                 <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
